@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Assinatura de Documento - SIM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-center">
+    <div class="container mt-5">
+        <div class="card shadow border-0 p-5 mx-auto" style="max-width: 600px;">
+            <h2 class="text-primary mb-4">Documento Recebido</h2>
+            <p class="lead">Arquivo: <strong>{{ documento.arquivo }}</strong></p>
+            <div class="alert alert-info text-start mt-4">
+                <strong>Instruções Gov.br:</strong>
+                <ol class="mb-0 mt-2">
+                    <li>Baixe o documento clicando no botão abaixo.</li>
+                    <li>Acesse o <a href="https://assinador.iti.br/" target="_blank">Assinador Digital Gov.br</a>.</li>
+                    <li>Faça o upload do arquivo, assine e devolva ao e-mail do SIM.</li>
+                </ol>
+            </div>
+            <p class="text-muted small mt-3">Sua visualização foi registrada em: {{ documento.data_leitura }}</p>
+            <button class="btn btn-success btn-lg w-100 mt-2">⬇️ Baixar PDF para Assinar</button>
+        </div>
+    </div>
+</body>
+</html>

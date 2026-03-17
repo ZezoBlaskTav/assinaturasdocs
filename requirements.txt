@@ -1,0 +1,5 @@
+flask
+flask-mail
+supabase
+werkzeug
+gunicorn

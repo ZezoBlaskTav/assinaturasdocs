@@ -2,55 +2,82 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assinador Digital - Gov.br</title>
+    <title>SISTEMA DE ASSINATURAS - SIM CAMAQUÃ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; }
-        .card { border-radius: 15px; border: none; }
-        .card-header { border-radius: 15px 15px 0 0 !important; }
+        .topo-sim { background-color: #004a99; color: white; padding: 25px; margin-bottom: 30px; }
+        .badge-status { font-size: 0.9rem; padding: 6px 12px; }
     </style>
 </head>
-<body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-lg">
-                    <div class="card-header bg-dark text-white text-center py-3">
-                        <h4 class="mb-0">Solicitar Assinatura</h4>
-                    </div>
-                    <div class="card-body p-4">
-                        
+<body class="bg-light">
+
+    <div class="topo-sim text-center shadow-sm">
+        <h2>SISTEMA DE ASSINATURAS - SIM CAMAQUÃ</h2>
+        <p class="mb-0">Gestão de Documentos com Persistência em Banco de Dados</p>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white fw-bold">Novo Envio</div>
+                    <div class="card-body">
                         {% with messages = get_flashed_messages(with_categories=true) %}
                             {% if messages %}
                                 {% for category, message in messages %}
-                                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                                        {{ message }}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
+                                    <div class="alert alert-{{ category }} small">{{ message }}</div>
                                 {% endfor %}
                             {% endif %}
                         {% endwith %}
 
                         <form action="/enviar" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label for="email" class="form-label font-weight-bold">E-mail do Destinatário</label>
-                                <input type="email" name="email" id="email" class="form-control" placeholder="exemplo@gmail.com" required>
-                                <div class="form-text">A pessoa receberá o documento e as instruções.</div>
+                                <label class="form-label small">E-mail do Destinatário</label>
+                                <input type="email" name="email" class="form-control" required>
                             </div>
-                            
-                            <div class="mb-4">
-                                <label for="documento" class="form-label font-weight-bold">Documento (PDF)</label>
-                                <input type="file" name="documento" id="documento" class="form-control" accept=".pdf" required>
+                            <div class="mb-3">
+                                <label class="form-label small">Documento PDF</label>
+                                <input type="file" name="documento" class="form-control" accept=".pdf" required>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary w-100 py-2">
-                                🚀 Enviar Documento Agora
-                            </button>
+                            <button type="submit" class="btn btn-primary w-100">Enviar para Assinatura</button>
                         </form>
                     </div>
-                    <div class="card-footer text-muted small text-center bg-white py-3">
-                        Integrado ao fluxo do <strong>Portal Assinador ITI (gov.br)</strong>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Histórico Permanente</h5>
+                        <a href="/" class="btn btn-sm btn-outline-primary">Atualizar Dashboard</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr class="small text-muted">
+                                        <th>Arquivo</th>
+                                        <th>Destinatário</th>
+                                        <th>Status de Leitura</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for doc in documentos %}
+                                    <tr>
+                                        <td class="small">{{ doc.arquivo }}</td>
+                                        <td class="small">{{ doc.destinatario }}</td>
+                                        <td>
+                                            {% if doc.status == 'Lido' %}
+                                                <span class="badge bg-success badge-status text-white">Visto em: {{ doc.data_leitura }}</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary badge-status text-white">{{ doc.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

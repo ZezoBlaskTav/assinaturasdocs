@@ -1,7 +1,6 @@
 flask
-flask-mail
+resend
 supabase
 python-dotenv
 werkzeug
 gunicorn
-blinker
